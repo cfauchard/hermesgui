@@ -1,9 +1,17 @@
-ROOT=/hermesgui
+################################################################################
+# start configuration
+#
+ROOT=/Users/Christophe/Projets/hermesgui
+site=hermesgui.intranet.itnovem.com
+#
+# end configuration
+################################################################################
+
+
 DJANGO_PROJECT=hermesgui
 USER=hermesgui
 PORT=443
-all=apache
-site=hermesgui.intranet.itnovem.com
+all=dirs static
 
 all: $(all)
 
@@ -13,9 +21,9 @@ clean:
 	rm -rf $(ROOT)/logs
 
 dirs:
-	[ ! -d $(ROOT)/apache ] && mkdir $(ROOT)/apache
-	[ ! -d $(ROOT)/logs ] && mkdir $(ROOT)/logs
-	[ ! -d $(ROOT)/www/static ] && mkdir -p $(ROOT)/www/static
+	[ -d $(ROOT)/apache ] || mkdir $(ROOT)/apache
+	[ -d $(ROOT)/logs ] || mkdir $(ROOT)/logs
+	[ -d $(ROOT)/www/static ] || mkdir -p $(ROOT)/www/static
 
 static: 
 	(cd $(ROOT)/django; python manage.py collectstatic --no-input)

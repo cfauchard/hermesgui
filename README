@@ -1,4 +1,6 @@
+================================================================================
 1. Initial installation
+
 
 1.1 Dependancies
 
@@ -9,34 +11,26 @@ mod-wsgi (4.5.7)
 pip (8.1.2)
 setuptools (20.10.1)
 
-1.1.2 Create working directories
+mod-wsgi is only needed for apache installation (production platform)
 
-<sh>
-mkdir -p apache logs www/static
-</sh>
 
-1.2 Django initialization
+1.2 Configure Environment
 
-1.2.1 Create new Django project
+1.2.1 By makefile
 
-<sh>django-admin startproject hermesgui</sh>
+<vi makefile>
+ROOT=<root install path directory>
+</vi>
 
-1.2.2 Create Django Applications
+<vi django/hermesgui/settings.py>
+STATIC_ROOT = '<root install path directory>/www/static'
+</vi>
 
-<sh>
-cd hermesgui
-python manage.py start app connection_admin
-</sh>
+<sh>make</sh>
 
-1.2.3 Install modified Django files
+1.2.2 Manually generate static files
 
-<sh>
-cd django; tar cf - . | cd ../hermesgui/; tar xvf -
-rm -rf django
-mv hermesgui django
-</sh>
-
-1.2.4 Generate static files
+For platforms without make and apache httpd installed.
 
 <sh>
 mkdir -p www/static
@@ -44,4 +38,26 @@ cd django
 python manage.py collectstatic --no-input
 </sh>
 
+1.3 Database tables generation
 
+<sh>
+cd django
+python manage.py migrate
+</sh>
+
+1.4 Super user create
+
+<sh>
+cd django
+python manage.py createsuperuser
+</sh>
+
+================================================================================
+2. Administration
+
+2.1 Development server
+
+<sh>
+cd django
+python manage.py runserver 0.0.0.0:8000
+</sh>
