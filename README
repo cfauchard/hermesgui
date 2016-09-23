@@ -1,0 +1,41 @@
+1. Initial installation
+
+1.1 Dependancies
+
+1.1.1 Create a python venv whith following dependancies
+
+Django (1.10.1)
+mod-wsgi (4.5.7)
+pip (8.1.2)
+setuptools (20.10.1)
+
+1.1.2 Create working directories
+
+<sh>
+mkdir -p apache logs www/static
+</sh>
+
+1.2 Django initialization
+
+1.2.1 Create new Django project
+
+<sh>django-admin startproject hermesgui</sh>
+
+1.2.2 Create Django Applications
+
+<sh>
+cd hermesgui
+python manage.py start app connection_admin
+</sh>
+
+1.2.3 Install modified Django files
+
+<sh>
+cd django; tar cf - . | cd ../hermesgui/; tar xvf -
+rm -rf django
+mv hermesgui django
+</sh>
+
+1.2.4 Restore sqllite3 database
+
+

@@ -1,0 +1,8 @@
+.*
+apache/*
+logs/*
+ssl/*.*
+venv
+www
+django/db.sqlite3
+*__pycache__
