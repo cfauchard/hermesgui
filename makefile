@@ -10,11 +10,17 @@ all: $(all)
 clean:
 	rm -rf $(ROOT)/www/static
 	rm -rf $(ROOT)/apache
+	rm -rf $(ROOT)/logs
+
+dirs:
+	[ ! -d $(ROOT)/apache ] && mkdir $(ROOT)/apache
+	[ ! -d $(ROOT)/logs ] && mkdir $(ROOT)/logs
+	[ ! -d $(ROOT)/www/static ] && mkdir -p $(ROOT)/www/static
 
 static: 
 	(cd $(ROOT)/django; python manage.py collectstatic --no-input)
 
-apache: static
+apache: dirs static
 	mod_wsgi-express setup-server \
 	--log-directory $(ROOT)/logs/ \
 	--document-root $(ROOT)/www/ \
