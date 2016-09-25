@@ -52,12 +52,79 @@ cd django
 python manage.py createsuperuser
 </sh>
 
-================================================================================
-2. Administration
 
-2.1 Development server
+================================================================================
+2. Configuration
+
+2.1 Localization
+
+<vi django/settings.py>
+LANGUAGE_CODE = 'fr'
+TIME_ZONE = 'Europe/Paris'
+</vi>
+
+
+================================================================================
+3. Administration
+
+3.1 Development server
 
 <sh>
 cd django
 python manage.py runserver 0.0.0.0:8000
 </sh>
+
+
+================================================================================
+4. Models
+
+4.1 Model definition
+
+4.1.1 Model definition example
+
+<vi django/<application/models.py>
+...
+class Connection(models.Model):
+    name = models.CharField(max_length=30)
+    host = models.CharField(max_length=30)
+    protocol = models.CharField(max_length=10)
+    user = models.CharField(max_length=30)
+    password = models.CharField(max_length=30)
+    private_key = models.FilePathField
+    deleteflag = models.BinaryField
+    activation = models.BinaryField
+    command = models.CharField(max_length=10)
+    excluderegex = models.CharField(max_length=10)
+    includeregex = models.CharField(max_length=10)
+    localdir = models.FilePathField()
+    statuslogdir = models.FilePathField
+    backupdir = models.FilePathField
+    remotedir = models.FilePathField
+    logfile = models.FilePathField
+</vi>
+
+4.2 Application declaration
+
+<vi django/settings.py>
+INSTALLED_APPS = [
+    'connection_admin.apps.ConnectionAdminConfig',
+    ...
+]
+</vi>
+
+update database schema
+
+<sh>
+python manage.py makemigrations
+python manage.py migrate
+</sh>
+
+4.2 Model admin
+
+add to administration interface:
+<vi django/connection_admin/admin.py>
+...
+from .models import Connection
+
+admin.site.register(Connection)
+</vi>
