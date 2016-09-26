@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'connection/style.css' %}" />
+
+<html>
+    <head>
+        <title>Connection</title>
+    </head>
+
+    <body>
+    {% block content %}{% endblock content %}
+    <h5>
+        <p><a href="{% url 'index' %}">Home</a></p>
+        <p><a href="{% url 'logout' %}">Logout</a></p>
+    </h5>
+    <h6>
+        version v0.2 beta - 26 septembre 2016 - Itnovem - Christophe Fauchard
+    </h6>
+    <a href="mailto:systeme@itnovem.com">systeme@itnovem.com</a>
+    </body>
+</html>

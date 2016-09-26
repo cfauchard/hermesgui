@@ -41,3 +41,8 @@ class Connection(models.Model):
     backupdir = models.CharField(max_length=80, blank=True, default="")
     remotedir = models.CharField(max_length=80, blank=True, default="")
     logfile = models.CharField(max_length=80, blank=True, default="")
+    group = models.CharField(max_length=80, blank=True, default="")
+
+    def __str__(self):
+        return self.name
+

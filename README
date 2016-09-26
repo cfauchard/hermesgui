@@ -85,22 +85,47 @@ python manage.py runserver 0.0.0.0:8000
 <vi django/<application/models.py>
 ...
 class Connection(models.Model):
-    name = models.CharField(max_length=30)
-    host = models.CharField(max_length=30)
-    protocol = models.CharField(max_length=10)
-    user = models.CharField(max_length=30)
-    password = models.CharField(max_length=30)
-    private_key = models.FilePathField
-    deleteflag = models.BinaryField
-    activation = models.BinaryField
-    command = models.CharField(max_length=10)
-    excluderegex = models.CharField(max_length=10)
-    includeregex = models.CharField(max_length=10)
-    localdir = models.FilePathField()
-    statuslogdir = models.FilePathField
-    backupdir = models.FilePathField
-    remotedir = models.FilePathField
-    logfile = models.FilePathField
+    GET = 'get'
+    PUT = 'put'
+    COMMANDS = (
+        (GET, 'GET'),
+        (PUT, 'PUT'),
+    )
+
+    SFTP = 'sftp'
+    FTP = 'ftp'
+    PROTOCOLS = (
+        (SFTP, 'SFTP'),
+        (FTP, 'FTP'),
+    )
+
+    name = models.CharField(max_length=80, blank=False, default="", primary_key=True, unique=True)
+    host = models.CharField(max_length=80, blank=False, default="localhost")
+    protocol = models.CharField(
+        max_length=4,
+        choices=PROTOCOLS,
+        default=SFTP,
+    )
+    user = models.CharField(max_length=30, blank=False, default="")
+    password = models.CharField(max_length=30, default="", blank=True)
+    private_key = models.CharField(max_length=80, blank=True, default="")
+    deleteflag = models.BooleanField(default=None)
+    activation = models.BooleanField(default=None)
+    command = models.CharField(
+        max_length=3,
+        choices=COMMANDS,
+        default=GET,
+    )
+    excluderegex = models.CharField(max_length=30, default="", blank=True)
+    includeregex = models.CharField(max_length=30, default="", blank=True)
+    localdir = models.CharField(max_length=80, blank=False, default="")
+    statuslogdir = models.CharField(max_length=80, blank=True, default="")
+    backupdir = models.CharField(max_length=80, blank=True, default="")
+    remotedir = models.CharField(max_length=80, blank=True, default="")
+    logfile = models.CharField(max_length=80, blank=True, default="")
+
+    def __str__(self):
+        return self.name
 </vi>
 
 4.2 Application declaration
@@ -127,4 +152,21 @@ add to administration interface:
 from .models import Connection
 
 admin.site.register(Connection)
+</vi>
+
+
+================================================================================
+5. Views
+
+5.1 Definition
+
+<vi django/connection/views.py>
+def detail(request, connection_name):
+    return HttpResponse("You're looking at connection %s." % connection_name)
+</vi>
+
+5.2 Add corresponding url
+
+<vi django/connection/urls.py>
+url(r'^(?P<question_id>[0-9]+)/$', views.detail, name='detail'),
 </vi>
