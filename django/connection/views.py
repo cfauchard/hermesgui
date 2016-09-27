@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from django.http import HttpResponse
+from .permissions import permission_test
 from .models import Connection
 from django.shortcuts import redirect
 from django.conf import settings
@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 def detail(request, connection_name):
     connection_selected = (Connection.objects.get(name=connection_name))
 
-    if not is_member(request, connection_selected):
+    if permission_test(request, connection_selected) == False:
         return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
 
     context = {
@@ -26,10 +26,5 @@ def index(request):
     context = {'latest_connection_list': latest_connection_list}
     return render(request, 'connection/index.html', context)
 
-def is_member(request, connection):
-    if not request.user.is_superuser:
-        if request.user.groups.filter(name=connection.group).count() == 0:
-            return False
 
-    return True
 

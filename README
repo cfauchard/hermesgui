@@ -147,7 +147,7 @@ python manage.py migrate
 4.2 Model admin
 
 add to administration interface:
-<vi django/connection_admin/admin.py>
+<vi django/connection/admin.py>
 ...
 from .models import Connection
 

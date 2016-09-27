@@ -2,6 +2,8 @@ from django.db import models
 
 # Create your models here.
 
+from django.contrib.auth.models import Group
+
 class Connection(models.Model):
     GET = 'get'
     PUT = 'put'
@@ -41,8 +43,13 @@ class Connection(models.Model):
     backupdir = models.CharField(max_length=80, blank=True, default="")
     remotedir = models.CharField(max_length=80, blank=True, default="")
     logfile = models.CharField(max_length=80, blank=True, default="")
-    group = models.CharField(max_length=80, blank=True, default="")
 
     def __str__(self):
         return self.name
 
+class Permission(models.Model):
+    connection = models.ForeignKey(Connection)
+    group = models.ForeignKey(Group)
+
+    def __str__(self):
+        return self.connection.name + "_" + self.group.name
