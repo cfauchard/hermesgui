@@ -34,3 +34,6 @@ a:hover {
 a:active, a:focus {
  color: red;
 }
+td {
+    border: 1px solid black;
+}

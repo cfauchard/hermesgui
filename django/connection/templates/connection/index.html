@@ -1,12 +1,27 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% if latest_connection_list %}
-    <ul>
-    {% for connection in latest_connection_list %}
-        <li><a href="/connection/{{ connection.name }}/">{{ connection.name }}</a></li>
+{% if connection_list %}
+    <table>
+        <tr>
+            <td>Nom</td>
+            <td>host</td>
+            <td>user</td>
+        </tr>
+    {% for connection in connection_list %}
+        <tr>
+            <td>
+                <a href="/connection/{{ connection.name }}/">{{ connection.name }}</a>
+            </td>
+            <td>
+                {{ connection.host }}
+            </td>
+            <td>
+                {{ connection.user }}
+            </td>
+        </tr>
     {% endfor %}
-    </ul>
+    </table>
 {% else %}
     <p>No connections are available.</p>
 {% endif %}

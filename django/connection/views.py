@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from .permissions import permission_test
+from .permissions import permission_test, get_authorized_connections
 from .models import Connection
 from django.shortcuts import redirect
 from django.conf import settings
@@ -22,8 +22,9 @@ def detail(request, connection_name):
 
 @login_required
 def index(request):
-    latest_connection_list = Connection.objects.order_by('name')[:100]
-    context = {'latest_connection_list': latest_connection_list}
+    #connection_list = Connection.objects.order_by('name')[:settings.MAX_ROWS]
+    connection_list = get_authorized_connections(request)
+    context = {'connection_list': connection_list}
     return render(request, 'connection/index.html', context)
 
 
