@@ -12,12 +12,12 @@ def permission_test(request, connection):
 
 def get_authorized_connections(request):
     if request.user.is_superuser:
-        connection_list = Connection.objects.order_by('name')[:settings.MAX_ROWS]
+        connections = Connection.objects.order_by('name')[:settings.MAX_ROWS]
 
     else:
         groups = request.user.groups.all()
-
-        connection_list = Connection.objects.filter(group__in=groups).order_by('name')[:settings.MAX_ROWS]
+        permissions = Permission.objects.filter(group__in=groups)
+        connections = Connection.objects.filter(permission__in=permissions).order_by('name')[:settings.MAX_ROWS]
         #connection_list = Connection.objects.order_by('name')[:settings.MAX_ROWS]
 
-    return connection_list
+    return connections
