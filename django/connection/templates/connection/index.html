@@ -1,12 +1,16 @@
-{% extends "base.html" %}
+{% extends "connection/base_site.html" %}
 
 {% block content %}
 {% if connection_list %}
+    <div id="table">
     <table>
         <tr>
             <td>Nom</td>
-            <td>host</td>
-            <td>user</td>
+            <td>Host</td>
+            <td>User</td>
+            <td>Post</td>
+            <td>Protocol</td>
+            <td>Delete Flag</td>
         </tr>
     {% for connection in connection_list %}
         <tr>
@@ -19,9 +23,19 @@
             <td>
                 {{ connection.user }}
             </td>
+            <td>
+                {{ connection.host }}
+            </td>
+            <td>
+                {{ connection.protocol }}
+            </td>
+            <td>
+                {{ connection.deleteflag }}
+            </td>
         </tr>
     {% endfor %}
     </table>
+    </div>
 {% else %}
     <p>No connections are available.</p>
 {% endif %}

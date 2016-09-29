@@ -24,7 +24,9 @@ def detail(request, connection_name):
 def index(request):
     #connection_list = Connection.objects.order_by('name')[:settings.MAX_ROWS]
     connection_list = get_authorized_connections(request)
-    context = {'connection_list': connection_list}
+    context = {
+        'connection_list': connection_list,
+    }
     return render(request, 'connection/index.html', context)
 
 

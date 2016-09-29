@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'connection/base.css' %}" />
+
+<html>
+    <head>
+        <title>Connection</title>
+    </head>
+
+    <body>
+        <header>
+
+            <h1>Connection</h1>
+            <h5>hermesgui v0.2 beta - 26/09/2016</h5>
+            <h6>Itnovem - Christophe Fauchard</h6>
+
+
+            <div id="navigation">
+                <a href="{% url 'index' %}" class="navigation_button">Accueil</a>
+                <a href="mailto:systeme@itnovem.com" class="navigation_button" align="right">Contact</a>
+                {% if request.user.username %}
+                    <a href="{% url 'logout' %}" class="navigation_button">Déconnexion({{ request.user.username }})</a>
+                {% endif %}
+            </div>
+        </header>
+        {% block content %}{% endblock content %}
+
+
+    </body>
+</html>
