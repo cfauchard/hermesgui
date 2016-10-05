@@ -50,6 +50,8 @@ class Connection(models.Model):
 class Permission(models.Model):
     connection = models.ForeignKey(Connection)
     group = models.ForeignKey(Group)
+    read = models.BooleanField(default=True)
+    write = models.BooleanField(default=None)
 
     def __str__(self):
         return self.connection.name + "_" + self.group.name

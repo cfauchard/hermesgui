@@ -1,16 +1,20 @@
 {% extends "connection/base_site.html" %}
+{% load i18n static %}
 
 {% block content %}
 {% if connection_list %}
+    {% if connection_list_size == max_rows %}
+    <p class="warning">{% trans 'Attention: nombre maximum d\'enregistrements sélectionnés atteint' %} ({{ max_rows }})</p>
+    {% endif %}
     <div id="table">
     <table>
         <tr>
-            <th>Nom</th>
-            <th>Host</th>
-            <th>User</th>
-            <th>Post</th>
-            <th>Protocol</th>
-            <th>Delete Flag</th>
+            <th>{% trans 'Nom' %}</th>
+            <th>{% trans 'Serveur' %}</th>
+            <th>{% trans 'Utilisateur' %}</th>
+            <th>{% trans 'Port' %}</th>
+            <th>{% trans 'Protocole' %}</th>
+            <th>{% trans 'Destruction fichier' %}</th>
         </tr>
     {% for connection in connection_list %}
         <tr>
@@ -24,7 +28,7 @@
                 {{ connection.user }}
             </td>
             <td>
-                {{ connection.host }}
+                {{ connection.port }}
             </td>
             <td>
                 {{ connection.protocol }}
@@ -37,6 +41,6 @@
     </table>
     </div>
 {% else %}
-    <p>No connections are available.</p>
+    <p>{% trans 'pas de connexion disponibles.' %}</p>
 {% endif %}
 {% endblock %}

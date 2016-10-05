@@ -39,7 +39,10 @@ def detail(request, connection_name):
 @login_required
 def index(request):
     connection_list = get_authorized_connections(request)
+    connection_list_size = len(connection_list)
     context = {
         'connection_list': connection_list,
+        'connection_list_size': connection_list_size,
+        'max_rows': settings.MAX_ROWS,
     }
     return render(request, 'connection/index.html', context)
