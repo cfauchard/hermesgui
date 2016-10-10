@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% extends "connection/base_site.html" %}
 
 {% block content %}
-Nom: {{ connection.name }}
-<br>
-Login: {{ connection.user }}
-<br>
-Protocol: {{ connection.protocol }}
+    <h1>New Connection</h1>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
 {% endblock %}

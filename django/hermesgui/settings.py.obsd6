@@ -121,4 +121,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+<<<<<<< HEAD:django/hermesgui/settings.py.obsd6
 STATIC_ROOT = '/hermesgui/www/static/'
+=======
+STATIC_ROOT = '/Users/Christophe/Projets/hermesgui/www/static/'
+
+MAX_ROWS = 100
+>>>>>>> github/master:django/hermesgui/settings.py
